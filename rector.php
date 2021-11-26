@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 use Rector\Core\Configuration\Option;
 use Rector\Doctrine\Set\DoctrineSetList;
 use Rector\Php74\Rector\Property\TypedPropertyRector;
@@ -15,7 +14,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
     $services = $containerConfigurator->services();
 
-    $parameters->set(Option::PATHS, [__DIR__ . '/src']);
+    $parameters->set(Option::PATHS, [__DIR__ . '/src', __DIR__ . '/tests']);
     $parameters->set(Option::PHPSTAN_FOR_RECTOR_PATH, __DIR__ . '/phpstan.neon');
 
     $parameters->set(Option::BOOTSTRAP_FILES, [
@@ -31,6 +30,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::CODE_QUALITY);
     $services->set(TypedPropertyRector::class);
 
+    // symfony rules
+    $parameters = $containerConfigurator->parameters();
+    $parameters->set(
+        Option::SYMFONY_CONTAINER_XML_PATH_PARAMETER,
+        __DIR__ . '/var/cache/dev/App_KernelDevDebugContainer.xml'
+    );
+    $containerConfigurator->import(SymfonySetList::SYMFONY_CODE_QUALITY);
+    $containerConfigurator->import(SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION);
     // TODO add symfony upgrade to latest version
 
     // doctrine rules

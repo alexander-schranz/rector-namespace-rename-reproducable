@@ -48,7 +48,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('configure', [[
             RenameNamespaceRector::OLD_TO_NEW_NAMESPACES => [
                 'App\First\OldNamespace' => 'App\First\AlreadyRenamedDirectory',
-                'App\Second\OldNamespace' => 'App\First\NewNamespace',
+                'App\Second\OldNamespace' => 'App\Second\NewNamespace',
             ],
         ]]);
 };

@@ -1,4 +1,4 @@
-name: PHPStan
+name: PHPUnit
 
 on:
     pull_request: ~
@@ -7,13 +7,14 @@ on:
         - cron: "0 0 * * *"
 
 jobs:
-    phpstan:
-        name: "PHPStan"
+    test:
+        name: "PHPUnit"
 
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout project
+              uses: actions/checkout@v2
 
             - name: Install and configure PHP
               uses: shivammathur/setup-php@v2
@@ -26,5 +27,8 @@ jobs:
             - name: Install composer dependencies
               uses: ramsey/composer-install@v1
 
-            - name: Run PHPStan
-              run: vendor/bin/phpstan
+            - name: Build Symfony Cache
+              run: bin/console cache:clear
+
+            - name: Run Test
+              run: vendor/bin/simple-phpunit

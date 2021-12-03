@@ -1,4 +1,4 @@
-name: Test
+name: Rector
 
 on:
     pull_request: ~
@@ -8,7 +8,7 @@ on:
 
 jobs:
     test:
-        name: "Test Rector"
+        name: "Rector"
 
         runs-on: ubuntu-latest
 
